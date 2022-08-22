@@ -149,10 +149,51 @@ begin
   end;
 end;
 
+{function Buscar1 (a:arbol; num: integer; var encontre:boolean):arbol
+begin
+	if(a<>nil) then begin
+		if(num=a^.dato) then Buscar1:=a
+		else begin
+			Buscar1()
+		end;
+	end;
+end;}
+
+function Buscar2 (a: arbol; num: integer): arbol; 
+begin
+  if (num=a^.dato) or (a = nil) then 
+	Buscar2:= a
+  else 
+    if (num>a^.dato) then  
+      Buscar2:= Buscar2(a^.HD,num)
+    else 
+      Buscar2:= Buscar2(a^.HI,num); 
+end;
+
+function verMin(a:arbol):integer;
+begin
+	if(a=nil) then verMin:=-1
+	else
+		if(a^.HI=nil) then
+			verMin:=a^.dato
+		else
+			verMin:=verMin(a^.HI);		
+end;
+
+function verMax(a:arbol):integer;
+begin
+	if(a=nil) then verMax:=-1
+	else
+		if(a^.HD=nil) then
+			verMax:=a^.dato
+		else
+			verMax:=verMax(a^.HD);	 	
+end;
 Var
 
  l: lista;
  a:arbol;
+ num:integer;
 
 begin
  Randomize;
@@ -166,6 +207,15 @@ begin
  end;
  imprimirpornivel(a);
  preOrden(a);
- readln;
-end.
+ writeln;
 
+ writeln('Ingrese un numero: '); readln(num);
+ if (Buscar2(a, num)<>nil) then writeln('El numero ', num, ' si se encuentra')
+ else writeln('El numero no se encuentra');
+
+ if (verMin(a)<>-1) then writeln('El menor numero es: ', verMin(a))
+ else writeln('El arbol esta vacio');
+ if (verMax(a)<>-1) then writeln('El mayor numero es: ', verMax(a))
+ else writeln('El arbol esta vacio');
+
+end.
