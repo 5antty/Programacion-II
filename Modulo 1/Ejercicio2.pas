@@ -1,9 +1,9 @@
-program eje02;
+program Ejercicio2;
 Uses
   sysutils;
 type
 
-{ ---------- C. CREACION LISTA ---------- }
+{ ---------- CREACION LISTAS Y ARBOL ---------- }
   pasaje = record
     codVuelo: String;
     cantMillas: integer;
@@ -28,10 +28,15 @@ type
         HI:arbol;
         HD:arbol;
        end;
-{ ---------- F. CREACION LISTA ---------- }
+  listaP=^nodoP;
+  nodoP=record
+         puntaje:integer;
+         sig:listaP;
+        end;
+{ ---------- CREACION LISTAS Y ARBOL ---------- }
 
 
-{ ---------- C. CARGAR LISTA ---------- }
+{ ---------- CARGAR LISTA ---------- }
 procedure pregunta (var r: pasaje);
   var
     v : array [1..2] of string;
@@ -93,10 +98,10 @@ begin
       crearlista(l,r);
     end;
 end;
-{ ---------- F. CARGAR LISTA ---------- }
+{ ---------- CARGAR LISTA ---------- }
 
 
-{ ---------- C. IMPRIMIR LISTA ---------- }
+{ ---------- IMPRIMIR LISTA ---------- }
 procedure imprimir(r: pasaje);
 begin
   with r do
@@ -111,7 +116,7 @@ begin
       l:= l^.sig;
     end;
 end;
-{ ---------- F. IMPRIMIR LISTA ---------- }
+{ ---------- IMPRIMIR LISTA ---------- }
 
 { ---------- CREAR ARBOL ---------- }
 function calcularPuntaje(p:pasaje):integer;
@@ -144,16 +149,23 @@ begin
          a^.dato.puntaje:=a^.dato.puntaje+calcularPuntaje(p);
 end;
 { ---------- CREAR ARBOL ---------- }
+
+{ ---------- CALCULAR MAYOR PUNTAJE TOTAL ---------- }
 function maxPuntaje(a:arbol):integer;
+var
+  max:integer;
 begin
   max:=-1;
   if(a<>nil)then begin
-    if(a^.dato.puntaje>maxPuntaje)then maxPuntaje:=a^.dato.puntaje;       
+    if(a^.dato.puntaje>max)then max:=a^.dato.puntaje;       
     maxPuntaje(a^.HI);
     maxPuntaje(a^.HD);
+    writeln(max);
+    if(maxPuntaje(a)>max)then max:=maxPuntaje(a);
   end;
+  maxPuntaje:=max;
 end;
-
+{ ---------- CALCULAR MAYOR PUNTAJE TOTAL ---------- }
 
 var
   l: lista;
@@ -173,4 +185,4 @@ begin
   writeln();
 
 end.
-{ ---------- F. PROGRAMA PRINCIPAL ---------- }
+{ ---------- PROGRAMA PRINCIPAL ---------- }
