@@ -182,6 +182,7 @@ begin
     insertar(a,l^.dato);
     l:=l^.sig;
   end;
+  writeln('EL MAYOR PUNTAJE TOTAL ES ',maxPuntaje(a));
   writeln();
 
 end.
