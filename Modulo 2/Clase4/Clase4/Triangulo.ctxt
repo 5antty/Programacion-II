@@ -1,0 +1,30 @@
+#BlueJ class context
+comment0.target=Triangulo
+comment1.params=
+comment1.target=Triangulo()
+comment1.text=public\ Triangulo(double\ unlado1,double\ unlado2,double\ unlado3,String\ unrelleno,String\ unalinea){\r\n\ \ \ \ \ \ \ \ \ lados[0]\=\ unlado1;\r\n\ \ \ \ \ \ \ \ \ lados[1]\=\ unlado2;\r\n\ \ \ \ \ \ \ \ \ lados[2]\=\ unlado3;\r\n\ \ \ \ \ \ \ \ \ relleno\=\ unrelleno;\r\n\ \ \ \ \ \ \ \ \ linea\=\ unalinea;\r\n}
+comment10.params=unrelleno
+comment10.target=void\ setRelleno(java.lang.String)
+comment11.params=unalinea
+comment11.target=void\ setLinea(java.lang.String)
+comment12.params=
+comment12.target=double\ Perimetro()
+comment13.params=
+comment13.target=double\ Area()
+comment2.params=
+comment2.target=double\ getLado1()
+comment3.params=
+comment3.target=double\ getLado2()
+comment4.params=
+comment4.target=double\ getLado3()
+comment5.params=
+comment5.target=java.lang.String\ getRelleno()
+comment6.params=
+comment6.target=java.lang.String\ getLinea()
+comment7.params=unlado1
+comment7.target=void\ setLado1(double)
+comment8.params=unlado2
+comment8.target=void\ setLado2(double)
+comment9.params=unlado3
+comment9.target=void\ setLado3(double)
+numComments=14

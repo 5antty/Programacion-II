@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Flotas
+comment1.params=
+comment1.target=Flotas()
+comment2.params=
+comment2.target=boolean\ FlotaCompleta()
+comment3.params=unMicro
+comment3.target=void\ setMicro(Micros)
+comment4.params=
+comment4.target=void\ AumentarDiml()
+comment5.params=p
+comment5.target=void\ eliminarMicro(java.lang.String)
+comment6.params=p
+comment6.target=Micros\ buscarPatente(java.lang.String)
+comment7.params=d
+comment7.target=Micros\ buscarDestino(java.lang.String)
+numComments=8
