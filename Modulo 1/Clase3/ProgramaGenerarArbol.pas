@@ -26,15 +26,6 @@ Type
   End;
 
 
-
-
-
-
-
-
-
-
-
 {-----------------------------------------------------------------------------
 AgregarAdelante - Agrega nro adelante de l}
 Procedure agregarAdelante(Var l: Lista; nro: integer);
@@ -71,14 +62,6 @@ Begin
 End;
 
 
-
-
-
-
-
-
-
-
 {-----------------------------------------------------------------------------
 CREARLISTA - Genera una lista con números aleatorios }
 Procedure crearLista(Var l: Lista);
@@ -96,15 +79,6 @@ Begin
 End;
 
 
-
-
-
-
-
-
-
-
-
 {-----------------------------------------------------------------------------
 IMPRIMIRLISTA - Muestra en pantalla la lista l }
 Procedure imprimirLista(l: Lista);
@@ -115,14 +89,6 @@ Begin
       l := l^.sig;
     End;
 End;
-
-
-
-
-
-
-
-
 
 
 {-----------------------------------------------------------------------------
@@ -142,15 +108,6 @@ Begin
 End;
 
 
-
-
-
-
-
-
-
-
-
 {-----------------------------------------------------------------------------
 AGREGARATRAS - Agrega un elemento atrás en l}
 
@@ -166,15 +123,6 @@ Begin
   Else ult^.sig := nue;
   ult := nue;
 End;
-
-
-
-
-
-
-
-
-
 
 
 {-----------------------------------------------------------------------------
@@ -221,14 +169,6 @@ Begin
 End;
 
 
-
-
-
-
-
-
-
-
 {function Buscar1 (a:arbol; num: integer; var encontre:boolean):arbol
 begin
 	if(a<>nil) then begin
@@ -270,99 +210,107 @@ Begin
     verMax := verMax(a^.HD);
 End;
 
-{CLASE 4}
-Procedure busquedaAcotada(a: arbol; inf:integer; sup:integer);
+Procedure cargarArbol(l:lista; Var a:arbol);
 Begin
-  If (a <> Nil) Then
-    If (a^.dato >= inf) Then
-      If (a^.dato <= sup) Then
-        Begin
-          write(a^.dato, ' ');
-          busquedaAcotada(a^.hi, inf, sup);
-          busquedaAcotada (a^.hd, inf, sup);
-        End
-  Else
-    busquedaAcotada(a^.hi, inf, sup)
-  Else
-    busquedaAcotada(a^.hd, inf, sup);
+  While (l<>Nil) Do
+    Begin
+      insertar(a, l^.dato);
+      l := l^.sig;
+    End;
+End;
+Procedure mostrarMin(a:arbol);
+Begin
+  If (verMin(a)<>-1) Then writeln('El menor numero es: ', verMin(a))
+  Else writeln('El arbol esta vacio');
+End;
+Procedure mostrarMax(a:arbol);
+Begin
+  If (verMax(a)<>-1) Then writeln('El mayor numero es: ', verMax(a))
+  Else writeln('El arbol esta vacio');
 End;
 
-Procedure borrarElemento(Var a:arbol; num:integer; Var resultado:boolean);
-
-Var 
-  aux, ant: arbol;
+Procedure busquedaAcotada(a: arbol; inf, sup:integer);
 Begin
-  If (a=Nil)Then writeln('no lo encontre')
-  Else
-    If (a^.dato>num)Then borrarElemento(a^.HD, num, false)
-  Else
-    If (a^.dato<num)Then borrarElemento(a^.HI, num, False)
-  Else
+  If (a <> Nil) Then
     Begin
-      resultado := true;
-      If (a^.HI=Nil) And (a^.HD=Nil) Then
-        Begin
-          aux := a;
-          dispose(aux);
-        End
-      Else If (a^.HI=Nil)And(a^.HD<>Nil) Then
-             Begin
-
-             End
-      Else If (a^.HD=Nil)And(a^.HI<>Nil)Then
-             Begin
-
-             End
-      Else If (a^.HD<>Nil)And(a^.HI<>Nil)Then
-             Begin
-
-             End;
+      If (a^.dato>= inf) Then
+        If (a^.dato<= sup) Then
+          Begin
+            Write(a^.dato, ' ');
+            busquedaAcotada(a^.hi, inf, sup);
+            busquedaAcotada (a^.hd, inf, sup);
+          End
+      Else
+        busquedaAcotada(a^.hi, inf, sup)
+      Else
+        busquedaAcotada(a^.hd, inf, sup);
     End;
 End;
 
-Var 
+Procedure borrar (Var a:arbol; dato:integer);
 
+Var 
+  b: integer;
+  aux: arbol;
+Begin
+  If (a<>Nil)Then
+    If (a^.dato>dato)Then
+      borrar(a^.HI,dato)
+  Else
+    If (a^.dato<dato) Then
+      borrar(a^.HD,dato)
+  Else
+    If (a^.HI=Nil) Then
+      Begin
+        aux := a;
+        a := a^.HD;
+        dispose(aux);
+      End
+  Else
+    If (a^.HD=Nil) Then
+      Begin
+        aux := a;
+        a := a^.HI;
+        dispose(aux);
+      End
+  Else
+    Begin
+      a^.dato := verMin(a^.HD);
+      borrar(a^.HD,a^.dato);
+    End;
+
+End;
+
+
+Var 
   l: lista;
   a: arbol;
   num, inf, sup: integer;
-
 Begin
   Randomize;
   a := Nil;
   crearLista(l);
   writeln ('Lista generada: ');
   imprimirLista(l);
-  While (l<>Nil) Do
-    Begin
-      insertar(a, l^.dato);
-      l := l^.sig;
-    End;
+  cargarArbol(l, a);
   imprimirpornivel(a);
   preOrden(a);
-  writeln;
+  WriteLn;
 
-  writeln('Ingrese un numero: ');
+{writeln('Ingrese un numero a buscar: ');
   readln(num);
-
-
-
-
-{if (Buscar2(a, num)<>nil) then writeln('El numero ', num, ' si se encuentra')
- else writeln('El numero no se encuentra');}
-  If (verMin(a)<>-1) Then writeln('El menor numero es: ', verMin(a))
-  Else writeln('El arbol esta vacio');
-  If (verMax(a)<>-1) Then writeln('El mayor numero es: ', verMax(a))
-  Else writeln('El arbol esta vacio');
-
-  WriteLn('Ingrese el limite inferior del rango');
-  ReadLn(inf);
-  WriteLn('Ingrese el limite superior del rango');
-  ReadLn(sup);
+  If (Buscar2(a, num)<>Nil) Then writeln('El numero ', num, ' si se encuentra')
+  Else writeln('El numero no se encuentra');}
+  mostrarMin(a);
+  mostrarMax(a);
+  Write('Ingrese numero inferior del intervalo: ');
+  readln(inf);
+  Write('Ingrese numero superior del intervalo: ');
+  readln(sup);
   busquedaAcotada(a, inf, sup);
-
-  writeln('Ingrese un nodo a borrar: ');
-  readln(num);
-  borrarElemento(a, num, False);
+  WriteLn;
+  Write('Ingrese nodo a borrar ');
+  ReadLn(num);
+  borrar(a, num);
   imprimirpornivel(a);
-
 End.
