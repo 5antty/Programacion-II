@@ -1,8 +1,8 @@
 public abstract class Vehiculo
 {
-   private int año;
-   private double importe;
-   private Propietario propietario;
+    private int año;
+    private double importe;
+    private Propietario propietario;
    
     public void setPropietario(Propietario propietario){
         this.propietario=propietario;
@@ -22,4 +22,5 @@ public abstract class Vehiculo
     public Propietario getPropietario(){
         return propietario;
     }   
+    public abstract double calcularCostoImpuestos();
 }
