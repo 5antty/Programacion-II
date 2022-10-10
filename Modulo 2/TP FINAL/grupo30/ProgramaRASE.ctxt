@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=ProgramaRASE
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ ProgramaRASE\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment2.params=in\ p
+comment2.target=void\ LeerPersona(java.util.Scanner,\ Persona)
+comment3.params=in\ s\ numg\ fecha\ ing\ integ\ reg\ p
+comment3.target=void\ LeerGasNatural(java.util.Scanner,\ Solicitud,\ java.lang.String,\ java.lang.String,\ double,\ int,\ java.lang.String,\ Persona)
+comment4.params=in\ s\ numg\ fecha\ ing\ integ\ reg\ p
+comment4.target=void\ LeerEnergiaElectrica(java.util.Scanner,\ Solicitud,\ java.lang.String,\ java.lang.String,\ double,\ int,\ java.lang.String,\ Persona)
+comment5.params=s
+comment5.target=void\ LeerSolicitud(Solicitud)
+numComments=6

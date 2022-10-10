@@ -13,7 +13,7 @@ public class ProgramaArba
         in.close();
         p =new Propietario(nom, ap, cit);
     }
-    public static void LeerVehiculo(Vehiculo v){
+    public static void LeerVehiculo(Vehiculo v, ){
         Scanner in = new Scanner(System.in);
         System.out.println("Ingrese propietario");
         Propietario prop = new Propietario();
