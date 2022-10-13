@@ -1,0 +1,12 @@
+ORG 1000H
+tabla db 1, 2, 3, 4, 5, 6, 7, 8
+res db 0
+    ORG 2000H
+    mov bx, OFFSET tabla
+THEN: add al, [bx]
+      inc bx
+    cmp bx, 1008h
+    jnz THEN
+    add res, al
+    HLT
+END

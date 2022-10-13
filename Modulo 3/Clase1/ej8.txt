@@ -1,0 +1,13 @@
+    org 1000h
+op1 db 12
+op2 db 5
+res db 
+    org 2000h
+    mov al, op2
+then add bl, op1
+      dec al
+    CMP al, 0
+    jnz then
+    mov res, bl
+    hlt
+    end

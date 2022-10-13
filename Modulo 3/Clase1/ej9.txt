@@ -1,0 +1,19 @@
+       org 1000h
+tabla1 DB 1, 2, 3, 4, 5
+tabla2 DB 2, 3, 4, 5, 6
+tabla3 DB ?, ?, ?, ?, ?
+       org 2000h
+       mov cx, offset tabla1
+       mov dx, offset tabla2
+       mov bx, offset tabla3
+suma: mov ax, 0 
+      add ax, cx
+      add ax, dx
+      mov [bx], ax
+      add bx, 2
+      inc cx
+      inc dx
+      cmp cx, offset tabla2
+      jnz suma
+       hlt
+end

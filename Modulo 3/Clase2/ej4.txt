@@ -1,0 +1,13 @@
+    ORG 1000h
+op1 DW ?
+op2 DW ?
+    ORG 2000h
+    mov al, op1
+    add al, op2
+COMP: CMP al, 100
+      jz ES_100
+      JNZ NO_100
+ES_100: hlt
+NO_100: dec al
+        jmp COMP
+    end

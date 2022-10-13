@@ -1,0 +1,9 @@
+     ORG 2000h
+     MOV AL, 10
+     MOV CL, 1
+LAZO: INC CL
+      ADD AL, AL
+     CMP CL, 10
+     JNZ LAZO
+     HLT
+     END
