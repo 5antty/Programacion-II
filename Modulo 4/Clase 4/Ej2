@@ -1,0 +1,100 @@
+programa Ej2
+procesos 
+  proceso juntarF
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  proceso juntarP
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+  proceso IntentoF(E av:numero; E ca:numero)
+  variables
+    avrandom:numero
+    carandom:numero
+  comenzar
+    Random(avrandom, 1,5)
+    Random(carandom, 1,10)
+    BloquearEsquina(avrandom, carandom)
+    Pos(avrandom, carandom)
+    juntarF
+    Pos(av, ca)
+    LiberarEsquina(avrandom, carandom)
+  fin
+  proceso IntentoP(E av:numero; E ca:numero)
+  variables
+    avrandom:numero
+    carandom:numero
+  comenzar
+    Random(avrandom, 6, 10)
+    Random(carandom, 1, 9)
+    BloquearEsquina(avrandom, carandom)
+    Pos(avrandom, carandom)
+    juntarP
+    Pos(av, ca)
+    LiberarEsquina(avrandom, carandom)
+  fin
+areas
+  inicioF : AreaP(6,10, 7,10)
+  inicioP : AreaP(8,10, 9,10)
+  areaF: AreaC(1,1,5,10)
+  areaP: AreaC(6,1,10,9)
+  deposito: AreaP(10,10,10,10)
+robots 
+  robot florero
+  variables
+    avini:numero
+    caini:numero
+  comenzar
+    avini:=PosAv
+    caini:=PosCa
+    repetir 5
+      IntentoF(avini, caini)
+    BloquearEsquina(10, 10)
+    Pos(10,10)
+    mientras HayFlorEnLaBolsa
+      depositarFlor
+    Pos(avini, caini)
+    LiberarEsquina(10,10)
+  fin
+  robot papelero
+  variables
+    avini:numero
+    caini:numero
+  comenzar
+    avini:=PosAv
+    caini:=PosCa
+    repetir 3
+      IntentoP(avini, caini)
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    mientras HayPapelEnLaBolsa
+      depositarPapel
+    Pos(avini, caini)
+    LiberarEsquina(10,10)
+  fin
+variables 
+  r1: florero
+  r2: florero
+  r3: papelero
+  r4: papelero
+comenzar 
+  AsignarArea(r1, inicioF)
+  AsignarArea(r1, areaF)
+  AsignarArea(r1, deposito)
+  AsignarArea(r2, inicioF)
+  AsignarArea(r2, areaF)
+  AsignarArea(r2, deposito)
+  AsignarArea(r3, inicioP)
+  AsignarArea(r3, areaP)
+  AsignarArea(r3, deposito)
+  AsignarArea(r4, inicioP)
+  AsignarArea(r4, areaP)
+  AsignarArea(r4, deposito)
+  Iniciar(r1, 6, 10)
+  Iniciar(r2, 7, 10)
+  Iniciar(r3, 8, 10)
+  Iniciar(r4, 9, 10)
+fin

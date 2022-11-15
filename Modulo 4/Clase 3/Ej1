@@ -1,0 +1,54 @@
+programa Ej1
+procesos
+  proceso RecogerFlores(ES f:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:=f+1
+  fin
+  proceso Recorrer(ES f:numero)
+  comenzar
+    repetir 9
+      RecogerFlores(f)
+      mover
+    RecogerFlores(f)
+  fin
+areas
+  areaR1:AreaP(1, 1, 1, 10)
+  areaR2:AreaP(2, 11, 2,20)
+robots
+  robot tipo1
+  variables
+    flores:numero
+    aux:numero
+    dif:numero
+  comenzar
+    Recorrer(flores)
+    EnviarMensaje(flores, r2)
+    RecibirMensaje(aux, r2)
+    dif:=flores - aux
+    si (flores>aux)
+      Informar(dif)
+  fin
+  robot tipo2
+  variables
+    flores2:numero
+    aux2:numero
+    dif2:numero
+  comenzar
+    Recorrer(flores2)
+    RecibirMensaje(aux2, r1)
+    EnviarMensaje(flores2, r1)
+    dif2:=flores2 - aux2
+    si (flores2>aux2)
+      Informar(dif2)
+  fin
+variables
+  r1:tipo1
+  r2:tipo2
+comenzar
+  AsignarArea(r1, areaR1)
+  AsignarArea(r2, areaR2)
+  Iniciar(r1, 1, 1)
+  Iniciar(r2, 2, 11)
+fin

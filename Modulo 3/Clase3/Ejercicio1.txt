@@ -1,0 +1,15 @@
+;Clase 3, Ejercicio 1;
+
+org 1000h
+num1_L dw 4822h
+num1_H dw 0010h
+num2_L dw 1256h
+num2_H dw 0220h
+
+org 2000h
+mov AX,num1_L
+add AX,num2_L
+mov BX,num1_H
+adc BX,num2_H
+hlt
+end

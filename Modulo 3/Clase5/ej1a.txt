@@ -1,0 +1,29 @@
+ORG 1000H 	; Datos
+i db 1
+n db 10
+res db 0
+	
+ORG 3000H  ; Subrutina
+rutina: mov bx, sp
+add bx, 2
+mov bx, [bx]
+mov cl, [bx]
+inc bx
+mov al, [bx]
+inc bx
+mov dl, [bx]
+lazo: inc dl
+inc cl
+cmp al, cl
+jnz lazo
+mov [bx], dl
+
+ret
+
+ORG 2000H   ; Programa Ppal.
+mov ax, offset i
+push ax
+call rutina
+pop ax
+HLT
+END

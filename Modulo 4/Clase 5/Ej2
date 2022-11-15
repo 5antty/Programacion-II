@@ -1,0 +1,98 @@
+programa Ej2
+procesos
+  proceso juntarF
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  proceso Recorrer(E anchoP:numero; E altoP:numero)
+  comenzar
+    repetir 2
+      repetir altoP
+        juntarF
+        mover
+      derecha
+      repetir anchoP
+        juntarF
+        mover
+      derecha
+  fin
+areas
+  perimetro1: AreaP(15,15,30,35)
+  perimetro2: AreaP(40,40,55,60)
+  inicioJ: AreaP(1,1,1,1)
+  inicioR1: AreaP(2,2,2,2)
+  inicioR2: AreaP(6,6,6,6)
+  deposito: AreaP(10,10,10,10)
+robots
+  robot floreros
+  variables
+    avini:numero
+    caini:numero
+    id:numero
+    anchoP:numero
+    altoP:numero
+    esq:numero
+  comenzar
+    avini:=PosAv
+    caini:=PosCa
+    RecibirMensaje(id, rjefe)
+    EnviarMensaje(id, rjefe)
+    RecibirMensaje(esq, rjefe)
+    EnviarMensaje(id, rjefe)
+    RecibirMensaje(anchoP, rjefe)
+    EnviarMensaje(id, rjefe)
+    RecibirMensaje(altoP, rjefe)
+    Pos(esq, esq)
+    Recorrer(anchoP, altoP)
+    BloquearEsquina(10, 10)
+    Pos(10,10)
+    mientras HayFlorEnLaBolsa
+      depositarFlor
+    Pos(avini, caini)
+    LiberarEsquina(10,10)
+  fin
+  robot jefe
+  variables
+    altoP:numero
+    anchoP:numero
+    id:numero
+  comenzar
+    anchoP:=15
+    altoP:=20
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    repetir 2
+      RecibirMensaje(id, *)
+      si(id=1)
+        EnviarMensaje(15, r1)
+        {RecibirMensaje(id, r1)}
+        EnviarMensaje(anchoP, r1)
+        {RecibirMensaje(id, r1)}
+        EnviarMensaje(altoP, r1)
+      sino
+        si(id=2)
+          EnviarMensaje(40, r2)
+          {RecibirMensaje(id, r2)}
+          EnviarMensaje(anchoP, r2)
+          {RecibirMensaje(id, r2)}
+          EnviarMensaje(altoP, r2)
+        sino
+          Informar('error', 00) 
+  fin
+variables
+  r1:floreros
+  r2:floreros
+  rjefe:jefe
+comenzar
+  AsignarArea(r1, inicioR1)
+  AsignarArea(r1, perimetro1)
+  AsignarArea(r1, deposito)
+  AsignarArea(r2, inicioR2)
+  AsignarArea(r2, perimetro2)
+  AsignarArea(r2, deposito)
+  AsignarArea(rjefe, inicioJ)
+  Iniciar(rjefe, 1, 1)
+  Iniciar(r1, 2,2)
+  Iniciar(r2, 6,6)
+fin

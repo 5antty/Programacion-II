@@ -1,0 +1,100 @@
+programa Ej3
+procesos
+  proceso juntarF(ES f:numero)
+  variables
+    termine:boolean
+  comenzar
+    si HayFlorEnLaEsquina
+      tomarFlor
+      f:=f+1
+      termine:=F
+      EnviarMensaje(termine, rjefe)
+    sino
+      termine:=V
+      EnviarMensaje(termine, rjefe)
+  fin
+areas
+  cuadrante: AreaC(2,2,10,10)
+  inicio: AreaC(1,1,5,1)
+robots
+  robot floreros
+  variables
+    flores:numero
+    av:numero
+    ca:numero
+    avini:numero
+    caini:numero
+    r:numero
+    termine:boolean
+  comenzar
+    avini:=PosAv
+    caini:=PosCa
+    r:=caini - 1
+    RecibirMensaje(av, rjefe)
+    RecibirMensaje(ca, rjefe)
+    BloquearEsquina(av, ca)
+    Pos(av, ca)
+    juntarF(flores)
+    Pos(avini, caini)
+    LiberarEsquina(av, ca)
+    RecibirMensaje(termine, rjefe)
+    EnviarMensaje(r, rjefe)
+    EnviarMensaje(flores, rjefe)
+  fin
+  robot jefe
+  variables
+    avrandom:numero
+    carandom:numero
+    termine:boolean
+    r:numero
+    r_max:numero
+    f:numero
+    maxf:numero
+  comenzar
+    termine:=F
+    Random(avrandom, 2, 10)
+    Random(carandom, 2, 10)
+    mientras ~termine
+      EnviarMensaje(avrandom, r1)
+      EnviarMensaje(carandom, r1)
+      RecibirMensaje(termine, r1)
+      EnviarMensaje(avrandom, r2)
+      EnviarMensaje(carandom, r2)
+      RecibirMensaje(termine, r2)
+      EnviarMensaje(avrandom, r3)
+      EnviarMensaje(carandom, r3)
+      RecibirMensaje(termine, r3)
+      EnviarMensaje(avrandom, r4)
+      EnviarMensaje(carandom, r4)
+      RecibirMensaje(termine, r4)
+    repetir 4
+      EnviarMensaje(termine, *)
+      RecibirMensaje(r, *)
+      RecibirMensaje(f, *)
+      si (f>maxf)
+        maxf:=f
+        r_max:=r
+    Informar(r_max)
+  fin
+variables
+  r1:floreros
+  r2:floreros
+  r3:floreros
+  r4:floreros
+  rjefe:jefe
+comenzar
+  AsignarArea(rjefe, inicio)
+  AsignarArea(r1, inicio)
+  AsignarArea(r1, cuadrante)
+  AsignarArea(r2, inicio)
+  AsignarArea(r2, cuadrante)
+  AsignarArea(r3, inicio)
+  AsignarArea(r3, cuadrante)
+  AsignarArea(r4, inicio)
+  AsignarArea(r4, cuadrante)
+  Iniciar(rjefe, 1,1)
+  Iniciar(r1, 2,1)
+  Iniciar(r2, 3,1)
+  Iniciar(r3, 4,1)
+  Iniciar(r4, 5,1)
+fin

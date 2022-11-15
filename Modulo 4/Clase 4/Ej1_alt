@@ -1,0 +1,139 @@
+programa Ej1
+procesos 
+  proceso juntarF(ES f:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:=f+1
+  fin
+  proceso juntarP(ES p:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      p:=p+1
+  fin
+  proceso CalleF(E valor:numero; ES elem:numero)
+  variables
+    miAv:numero
+    miCa:numero
+  comenzar
+    derecha
+    repetir 99
+      miAv:=PosAv
+      miCa:=PosCa
+      juntarF(elem)
+      BloquearEsquina(miAv+valor, miCa)
+      mover
+      LiberarEsquina(miAv, miCa)
+  fin
+  proceso CalleP(E valor:numero; ES elem:numero)
+  variables
+    miAv:numero
+    miCa:numero
+  comenzar
+    derecha
+    repetir 99
+      miAv:=PosAv
+      miCa:=PosCa
+      juntarP(elem)
+      BloquearEsquina(miAv+valor, miCa)
+      mover
+      LiberarEsquina(miAv, miCa)
+  fin
+  proceso AvenidaF(E valor:numero; ES elem:numero)
+  variables
+    miAv:numero
+    miCa:numero
+  comenzar
+    repetir 99
+      miAv:=PosAv
+      miCa:=PosCa
+      juntarF(elem)
+      BloquearEsquina(miAv, miCa+valor)
+      mover
+      LiberarEsquina(miAv, miCa)
+  fin
+  proceso AvenidaP(E valor:numero; ES elem:numero)
+  variables
+    miAv:numero
+    miCa:numero
+  comenzar
+    repetir 99
+      miAv:=PosAv
+      miCa:=PosCa
+      juntarP(elem)
+      BloquearEsquina(miAv, miCa+valor)
+      mover
+      LiberarEsquina(miAv, miCa)
+  fin
+areas
+  areaR1 : AreaP(49,50,49,50)
+  areaR2 : AreaP(50,49,50,49)
+  av1: AreaC(1,1, 1, 100)
+  av100: AreaC(100, 1, 100, 100)
+  ca1: AreaC(2,1,99, 1)
+  ca100: AreaC(2,100,99,100)
+robots 
+  robot florero
+  variables
+    elem:numero
+    valorRecorrido:numero
+    tipo:numero
+    avIni:numero
+    caIni:numero
+  comenzar
+    avIni:=PosAv
+    caIni:=PosCa
+    elem:=0
+    BloquearEsquina(1,1)
+    Pos(1, 1)
+    valorRecorrido:=1
+    repetir 2
+      Avenidaf(valorRecorrido, elem)
+      CalleF(valorRecorrido, elem)
+      derecha
+      valorRecorrido:=-1
+    Pos(avIni, caIni)
+    LiberarEsquina(1, 1)
+    Informar(elem)
+  fin
+robot papelero
+  variables
+    elem:numero
+    valorRecorrido:numero
+    tipo:numero
+    avIni:numero
+    caIni:numero
+  comenzar
+    avIni:=PosAv
+    caIni:=PosCa
+    elem:=0
+    BloquearEsquina(1,1)
+    Pos(1, 1)
+    valorRecorrido:=1
+    repetir 2
+      AvenidaP(valorRecorrido, elem)
+      CalleP(valorRecorrido, elem)
+      derecha
+      valorRecorrido:=-1
+    Pos(avIni, caIni)
+    LiberarEsquina(1, 1)
+    Informar(elem)
+  fin
+variables 
+  r1: florero
+  r2: papelero
+comenzar 
+  AsignarArea(r1, areaR1)
+  AsignarArea(r1, av1)
+  AsignarArea(r1, av100)
+  AsignarArea(r1, ca1)
+  AsignarArea(r1, ca100)
+  AsignarArea(r2, areaR2)
+  AsignarArea(r2, av1)
+  AsignarArea(r2, av100)
+  AsignarArea(r2, ca1)
+  AsignarArea(r2, ca100)
+  Iniciar(r1, 49, 50)
+  Iniciar(r2, 50, 49)
+fin

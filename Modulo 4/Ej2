@@ -1,0 +1,41 @@
+programa Ej1
+procesos 
+  proceso CheckEsquina(ES flores:numero; ES esinflor:numero)
+  comenzar
+    si ~HayFlorEnLaEsquina
+      esinflor:=esinflor+1
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso Recorrer
+  variables
+    flores:numero
+    esinflor:numero
+  comenzar
+    flores:=0
+    esinflor:=0
+    repetir 99
+      CheckEsquina(flores, esinflor)
+      mover
+    CheckEsquina(flores, esinflor)
+    mientras HayFlorEnLaEsquina
+      depositarFlor 
+    Informar(flores)
+    Informar(esinflor)
+  fin
+areas
+  areaR1 : AreaP(1,1,11,100)
+robots 
+  robot tipo1 
+  comenzar
+    repetir 5
+      Recorrer
+      Pos(PosAv+2, 1)
+  fin   
+variables 
+  robot1: tipo1
+comenzar 
+  AsignarArea(robot1,areaR1)
+  Iniciar(robot1, 1, 1)
+fin

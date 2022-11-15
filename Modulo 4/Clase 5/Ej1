@@ -1,0 +1,53 @@
+programa Ej1
+procesos
+  proceso juntarF
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  proceso Recorrer
+  comenzar
+    repetir 2
+      repetir 20
+        juntarF
+        mover
+      derecha
+      repetir 15
+        juntarF
+        mover
+      derecha
+  fin
+areas
+  perimetro1: AreaP(15,15,30,35)
+  perimetro2: AreaP(40,40,55,60)
+  inicio: AreaC(1,1,2,1)
+  deposito: AreaP(10,10,10,10)
+robots
+  robot floreros
+  variables
+    avini:numero
+    caini:numero
+  comenzar
+    avini:=PosAv
+    caini:=PosCa
+    Recorrer
+    BloquearEsquina(10, 10)
+    Pos(10,10)
+    mientras HayFlorEnLaBolsa
+      depositarFlor
+    Pos(avini, caini)
+    LiberarEsquina(10,10)
+  fin
+variables
+  r1:floreros
+  r2:floreros
+comenzar
+  AsignarArea(r1, inicio)
+  AsignarArea(r1, perimetro1)
+  AsignarArea(r1, deposito)
+  AsignarArea(r2, inicio)
+  AsignarArea(r2, perimetro2)
+  AsignarArea(r2, deposito)
+  Iniciar(r1, 15,15)
+  Iniciar(r2, 40,40)
+fin

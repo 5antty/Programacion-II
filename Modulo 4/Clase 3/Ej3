@@ -1,0 +1,79 @@
+programa Ej3
+procesos
+  proceso RecogerFlores(ES f:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      f:=f+1
+  fin
+  proceso RecogerPapeles(ES p:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      p:=p+1
+  fin
+  proceso Escalon(ES masf:numero)
+  variables
+    f:numero
+    p:numero
+    alto:numero
+  comenzar
+    f:=0
+    p:=0
+    Random(alto, 1, 5)
+    repetir alto
+      RecogerFlores(f)
+      RecogerPapeles(p)
+      mover
+    RecogerFlores(f)
+    RecogerPapeles(p)
+    si (f>p)
+      masf:=masf+1
+    derecha
+    mover
+  fin
+areas
+  areaJefe:AreaP(1, 1, 1, 1)
+  areaR1:AreaP(2, 1, 6, 21)
+  areaR2:AreaP(7, 1, 11, 21)
+  areaR3:AreaP(12, 1, 16, 21)
+robots
+  robot tipo1
+  variables
+    masf:numero
+  comenzar
+    masf:=0
+    repetir 4
+      Escalon(masf)
+      repetir 3
+        derecha
+    EnviarMensaje(masf, rjefe)
+  fin
+  robot jefe
+  variables
+    f1:numero
+    f2:numero
+    f3:numero
+    floresTotales:numero
+  comenzar
+    RecibirMensaje(f1, *)
+    RecibirMensaje(f2, *)
+    RecibirMensaje(f3, *)
+    floresTotales := f1 + f2 + f3
+    Informar(floresTotales)
+  fin
+variables
+  rjefe:jefe
+  r1:tipo1
+  r2:tipo1
+  r3:tipo1
+comenzar
+  AsignarArea(rjefe, areaJefe)
+  AsignarArea(r1, areaR1)
+  AsignarArea(r2, areaR2)
+  AsignarArea(r3, areaR3)
+  Iniciar(rjefe, 1, 1)
+  Iniciar(r1, 2, 1)
+  Iniciar(r2, 7, 1)
+  Iniciar(r3, 12, 1)
+fin

@@ -1,0 +1,20 @@
+a db 1
+b db 8
+res db 0
+	
+ORG 3000H  ; Subrutina
+subrutina: mov ah, 1
+lazo:add ah, ah
+inc al
+cmp al, [bx]
+jnz lazo
+mov [bx], ah
+ret
+
+ORG 2000H   ; Programa Ppal.
+mov al, a
+mov bx, offset b
+mov ah, res
+call subrutina
+HLT
+END

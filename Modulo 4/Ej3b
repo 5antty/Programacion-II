@@ -1,0 +1,48 @@
+programa Ej3
+procesos 
+  proceso CheckEsquina
+  comenzar
+    si(PosCa mod 2=0)
+      si HayPapelEnLaBolsa
+        depositarPapel
+    sino
+      si HayFlorEnLaBolsa
+        depositarFlor
+  fin
+  proceso Recorrer
+  comenzar
+    repetir 99
+      CheckEsquina
+      mover
+    CheckEsquina
+  fin
+areas
+  areaR1 : AreaP(1,1,100,100)
+robots 
+  robot tipo1 
+  variables
+    auxCa:numero
+    auxAv:numero
+  comenzar
+    auxCa:=PosCa
+    auxAv:=PosAv
+    repetir 3
+      derecha  
+    Recorrer
+    Pos(auxAv, auxCa)
+  fin
+variables 
+  robot1: tipo1
+  robot2: tipo1
+  robot3: tipo1
+  robot4: tipo1
+comenzar 
+  AsignarArea(robot1,areaR1)
+  AsignarArea(robot2,areaR1)
+  AsignarArea(robot3,areaR1)
+  AsignarArea(robot4,areaR1)
+  Iniciar(robot1, 100, 1)
+  Iniciar(robot2, 100, 2)
+  Iniciar(robot3, 100, 3)
+  Iniciar(robot4, 100, 4)
+fin
