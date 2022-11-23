@@ -1,0 +1,42 @@
+ORG 1000h
+VOC DB "AEIOUaeiou"
+CADENA DB "MUrcieLAGO"
+FINCADENA DB ?
+
+org 3000h
+VOCALES: MOV DL, OFFSET FINCADENA - OFFSET CADENA; cantidad de caracteres de la cadena
+BUCLE2:  CMP DL, 0
+         JZ FIN2
+         MOV AL, [BX]; guardo el caracter en AL
+         CALL ES_VOCAL
+         INC BX; incremento BX para tener la direccion de los siguientes caracteres de la cadena
+         DEC DL; decremento DL para saber cuando se termninan las vocales a comparar
+         JMP BUCLE2
+FIN2:    RET
+
+
+ES_VOCAL: PUSH BX;guardo BX, ya que contiene la dir de los caracteres
+          PUSH AX; guardo AX porque tiene el valor del caracter
+          PUSH CX; guardo para reutilizar la subrutina
+          MOV BX, CX; muevo a BX la dir de las vocales
+          MOV CH, AL; muevo a ch un caracter de la cadena
+          mov CL, OFFSET CADENA - OFFSET VOC; cantidad de vocales
+BUCLE1:   CMP cl, 0
+          JZ FIN1
+          CMP CH, [BX]; comparo un caracter de la cadena con un caracter de las vocales
+          JZ VERDADERO
+          INC BX
+          DEC CL
+          JMP BUCLE1
+VERDADERO:INC DH
+FIN1:     POP CX
+          POP AX
+          POP BX
+          RET
+
+org 2000h
+          MOV CX, OFFSET VOC
+          MOV BX, OFFSET CADENA
+          CALL VOCALES
+          hlt
+end

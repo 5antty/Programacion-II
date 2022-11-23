@@ -1,0 +1,195 @@
+programa TP_Promocion
+procesos
+  proceso JuntarP(ES p:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      p:=p+1
+  fin
+  proceso RecorrerCalle100(ES sigo:boolean; ES papeld:numero; E avi:numero; E cai:numero)
+  variables
+    avd:numero
+  comenzar
+    mientras (sigo)
+      BloquearEsquina(100,50)
+      Pos(100,50)
+      si (HayPapelEnLaEsquina)
+        tomarPapel
+        Random(avd,1,100)
+        BloquearEsquina(avd,100)
+        Pos(avd,100)
+        LiberarEsquina(100,50)
+        depositarPapel
+        papeld:=papeld+1
+        Pos(avi,cai)
+        LiberarEsquina(avd,100)
+      sino 
+        sigo:=F
+        Pos(avi,cai)
+        LiberarEsquina(100,50)
+  fin
+areas
+  deposito: AreaPC(100,50,100,50)
+  areaLimpiadores: AreaPC(10,10,40,30)
+  areaJuez: AreaP(1,1,1,1)
+  areaCoordinador: AreaP(2,1,2,1)
+  areaDecoradores: AreaPC(1,100,100,100)
+  inicioL1: AreaP(7,8,7,8)
+  inicioL2: AreaP(9,8,9,8)
+  inicioL3: AreaP(11,8,11,8)
+  inicioL4: AreaP(13,8,13,8)
+  inicioD2: AreaP(100,99,100,99)
+  inicioD1: AreaP(99,99,99,99)
+robots
+  robot coordinador
+  variables
+    turno:numero
+    avRandom:numero
+    caRandom:numero
+    sigo,h:boolean
+  comenzar
+    repetir 10   
+      Random(turno, 1,4)
+      Random(avRandom, 10,40)
+      Random(caRandom, 10,30)
+      {asigna segun el turno a un limpiador}
+      si (turno=1)
+        EnviarMensaje(V, L1)
+        EnviarMensaje(avRandom, L1)
+        EnviarMensaje(caRandom, L1)
+      sino
+        si(turno=2)
+          EnviarMensaje(V, L2)
+          EnviarMensaje(avRandom, L2)
+          EnviarMensaje(caRandom, L2)
+        sino
+          si(turno=3)
+            EnviarMensaje(V, L3)
+            EnviarMensaje(avRandom, L3)
+            EnviarMensaje(caRandom, L3)
+          sino
+            si(turno=4)
+              EnviarMensaje(V, L4)
+              EnviarMensaje(avRandom, L4)
+              EnviarMensaje(caRandom, L4)
+            sino
+              Informar('error', 00)
+      RecibirMensaje(h,*)
+    EnviarMensaje(F,L1)
+    EnviarMensaje(F,L2)
+    EnviarMensaje(F,L3)
+    EnviarMensaje(F,L4)
+    {Espera para iniciar los decoradores}
+    RecibirMensaje(sigo, juez)
+    EnviarMensaje(sigo,D1)
+    EnviarMensaje(sigo,D2)
+  fin
+  
+  robot limpiador
+  variables
+    avRandom,caRandom:numero
+    papeles:numero
+    avini:numero
+    caini:numero
+    TengoTurno:boolean
+  comenzar
+    avini:=PosAv
+    caini:=PosCa
+    RecibirMensaje(TengoTurno, coor)
+    {si tiene turno, va a una esquina random a limpiar}
+    mientras(TengoTurno)
+      RecibirMensaje(avRandom, coor)
+      RecibirMensaje(caRandom, coor)
+      BloquearEsquina(avRandom, caRandom)
+      Pos(avRandom, caRandom)
+      JuntarP(papeles)
+      Pos(avini,caini)
+      LiberarEsquina(avRandom, caRandom)
+      EnviarMensaje(V,coor)
+      RecibirMensaje(TengoTurno,coor)
+    {una vez terminado los 10 turnos, depositan los papeles en la esquina 100, 50}
+    BloquearEsquina(100,50)
+    Pos(100,50)
+    mientras HayPapelEnLaBolsa
+      depositarPapel
+    Pos(avini,caini)
+    LiberarEsquina(100,50)
+    EnviarMensaje(papeles,juez)
+  fin
+  robot juez
+  variables
+    aux,total,max,cant,id,idm:numero
+  comenzar
+    max:=-1
+    repetir 4
+      RecibirMensaje(aux,*)
+      total:= total+aux
+    EnviarMensaje(V,coor)
+    EnviarMensaje(1,D1)
+    EnviarMensaje(2,D2)
+    repetir 2 
+      RecibirMensaje(id,*)
+      si (id=1)
+        RecibirMensaje(cant,D1)
+        si (cant>max) 
+          max:=cant
+          idm:=id
+      sino 
+        RecibirMensaje(cant,D2)
+        si (cant>max)
+          max:=cant
+          idm:=id
+    Informar('El_decorador_que_deposito_mas_papeles_es_el_', idm)
+  fin
+  robot decorador
+  variables
+    sigo:boolean
+    papeld,avi,id,cai:numero
+  comenzar
+    avi:=PosAv
+    cai:=PosCa
+    RecibirMensaje(id,juez)
+    RecibirMensaje(sigo,coor)
+    RecorrerCalle100(sigo, papeld, avi, cai)
+    EnviarMensaje(id,juez)
+    EnviarMensaje(papeld,juez)    
+  fin    
+variables
+  juez:juez
+  coor:coordinador
+  L1:limpiador
+  L2:limpiador
+  L3:limpiador
+  L4:limpiador
+  D1:decorador
+  D2:decorador
+comenzar
+  AsignarArea(juez, areaJuez)
+  AsignarArea(coor, areaCoordinador)
+  AsignarArea(L1, inicioL1)
+  AsignarArea(L1, areaLimpiadores)
+  AsignarArea(L1, deposito)
+  AsignarArea(L2, inicioL2)
+  AsignarArea(L2, areaLimpiadores)
+  AsignarArea(L2, deposito)
+  AsignarArea(L3, inicioL3)
+  AsignarArea(L3, areaLimpiadores)
+  AsignarArea(L3, deposito)
+  AsignarArea(L4, inicioL4)
+  AsignarArea(L4, areaLimpiadores)
+  AsignarArea(L4, deposito)
+  AsignarArea(D1, inicioD1)
+  AsignarArea(D1, areaDecoradores)
+  AsignarArea(D1, deposito)
+  AsignarArea(D2, inicioD2)
+  AsignarArea(D2, areaDecoradores)
+  AsignarArea(D2, deposito)
+  Iniciar(juez, 1, 1)
+  Iniciar(coor, 2, 1)
+  Iniciar(L1, 7,8)
+  Iniciar(L2, 9,8)
+  Iniciar(L3, 11,8)
+  Iniciar(L4, 13,8)
+  Iniciar(D1, 99,99)
+  Iniciar(D2, 100,99)
+fin

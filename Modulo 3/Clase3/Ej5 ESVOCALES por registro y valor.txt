@@ -1,0 +1,27 @@
+org 1000h
+vocales db "AEIOUaeiou"
+caracter db "e"
+
+org 3000h
+ES_VOCAL:MOV BX, DX
+mov ch, al
+mov cl, OFFSET caracter - offset vocales; cantidad de caracteres de la cadena
+
+MOV aH, 00H
+BUCLE: cmp cl, 0
+JZ FIN
+CMP ch, [BX]
+JZ VERDADERO
+INC BX
+DEC CL
+JMP BUCLE
+VERDADERO: MOV aH, 0FFH
+
+FIN:RET
+
+org 2000h
+mov al, caracter
+mov dx, offset vocales
+call ES_VOCAL
+hlt
+end

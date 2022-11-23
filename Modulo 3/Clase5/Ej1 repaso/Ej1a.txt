@@ -1,0 +1,28 @@
+ORG 1000H
+n DB 5
+ORG 3000H
+SUBR push ax
+push bx
+mov bx, sp
+add bx, 6
+mov bx, [bx]
+MOV AL, 0
+mov ah, 1
+repetir cmp [bx], ah
+jz finr
+add al, ah
+inc ah
+jmp repetir
+finr mov [bx], al
+pop bx
+pop ax
+ret
+
+ORG 2000H
+mov ax, offset n
+push ax
+call SUBR
+pop ax
+HLT
+
+END

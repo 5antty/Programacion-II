@@ -1,0 +1,51 @@
+ORG 1000H
+tb db 1, 20, 5, 4, 30
+valores_mod db 0
+
+ORG 3000H
+SUBR: push ax; push para guardar los regitros para reusar SUBR
+push bx; push para guardar los regitros para reusar SUBR
+mov bx, sp; guarda SP en bx para acceder a la pila
+add bx, 8; direccion donde se encuntra la dir de valores_mod
+mov bx, [bx]
+mov ch, [bx]
+cmp ch, 20
+jns finr
+MOV AL, 0
+mov ah, 1
+inc ch
+inc dx
+repetir: cmp ch, ah
+jz reemplazar
+add al, ah
+inc ah
+jmp repetir
+reemplazar: mov [bx], al
+finr:mov bx, sp
+add bx, 10
+mov bx, [bx]
+mov [bx], dx
+pop bx
+pop ax
+ret
+
+ORG 2000H
+mov ax, offset valores_mod
+push ax
+mov ax, offset tb
+mov cl, offset valores_mod - offset tb
+
+recorrer: cmp cl, 0
+jz fin
+push ax
+push cx
+call SUBR
+pop cx
+pop ax
+inc ax
+dec cl
+jmp recorrer
+pop ax
+fin:HLT
+
+END
