@@ -16,13 +16,11 @@ procesos
       si (HayPapelEnLaEsquina)
         tomarPapel
         Random(avd,1,100)
-        BloquearEsquina(avd,100)
         Pos(avd,100)
         LiberarEsquina(100,50)
         depositarPapel
         papeld:=papeld+1
         Pos(avi,cai)
-        LiberarEsquina(avd,100)
       sino 
         sigo:=F
         Pos(avi,cai)
@@ -100,11 +98,9 @@ robots
     mientras(TengoTurno)
       RecibirMensaje(avRandom, coor)
       RecibirMensaje(caRandom, coor)
-      BloquearEsquina(avRandom, caRandom)
       Pos(avRandom, caRandom)
       JuntarP(papeles)
       Pos(avini,caini)
-      LiberarEsquina(avRandom, caRandom)
       EnviarMensaje(V,coor)
       RecibirMensaje(TengoTurno,coor)
     {una vez terminado los 10 turnos, depositan los papeles en la esquina 100, 50}
